@@ -1,0 +1,94 @@
+swagger: '2.0'
+info:
+  description: This is the API documentation for the COP 4331 Contacts App
+  version: 1.0.0
+  title: Contacts App
+  # put the contact info for your development or API team
+  contact:
+    email: je127364@ucf.edu
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+paths:
+  /Login.php:
+    post:
+      tags:
+      - Users
+      summary: Logs in to the contacts app
+      operationId: dlLogin
+      description: Logs in to the contacts app
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: loginItem
+        description: Login
+        schema:
+          $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  /SearchContacts.php:
+    post:
+      tags:
+      - Search
+      summary: Searches contacts
+      operationId: searchContact
+      description: Searches contacts from the contact app database
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: searchItem
+        description: Contact Search
+        schema:
+          $ref: '#/definitions/Search'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+          
+definitions:
+  Login:
+    type: object
+    required:
+    - Login
+    - Password
+    properties:
+      Login:
+        type: string
+        example: "fred"
+      Password:
+        type: string
+        example: "secret"
+  Search:
+    type: object
+    required:
+    - UserId
+    - search
+    properties:
+      UserId:
+        type: integer
+        example: 1
+      search:
+        type: string
+        example: "bl"
+
+
+host: 165.227.103.4
+basePath: /LAMPAPI
+schemes:
+- http
