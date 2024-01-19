@@ -6,22 +6,7 @@ database: COP4331
 endpoints to do:
 Login - Done
 Register - Done
-AddContact
+AddContact - Done
 DeleteContact
 UpdateContact
 SearchContacts - Done
-
-How to Test each Endpoint:
-Login.php:
-"Login" :  ,
-"Password" : 
-
-SearchContacts.php:
-"UserId" : ,
-"search" : ""
-
-Register.php:
-"Login": "",
-"Password": "",
-"FirstName": "",
-"LastName": ""

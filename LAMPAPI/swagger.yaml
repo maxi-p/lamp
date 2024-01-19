@@ -50,7 +50,7 @@ paths:
         name: registerUser
         description: Register
         schema:
-          $ref: '#definitions/Register'
+          $ref: '#/definitions/Register'
       responses:
         "Empty Error String":
           description: OK
@@ -58,10 +58,32 @@ paths:
           description: There is already a login in the database with the same login as what was inputted.
         "Failed to add User":
           description: There is an error with the database and it failed to register the user
+  /AddContact.php:
+    post:
+      tags:
+      - Contacts
+      summary: Adds contact
+      operationId: addContact
+      description: Adds a contact to the database, makes sure that there isn't an existing contact with the same first name, last name, and user id.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: addContact
+        description: Adds Contact
+        schema:
+          $ref: '#/definitions/Add'
+      responses:
+        "Empty Error String":
+          description: OK
+        "Contact already exists":
+          description: Found an existing contact with the same name and user id.
   /SearchContacts.php:
     post:
       tags:
-      - Search
+      - Contacts
       summary: Searches contacts
       operationId: searchContact
       description: Searches contacts from the contact app database, returns an array of contacts that match the search.
@@ -126,6 +148,30 @@ definitions:
       LastName:
         type: string
         example: Doe
+  Add:
+    type: object
+    required:
+    - FirstName
+    - LastName
+    - Phone
+    - Email
+    - UserId
+    properties:
+      FirstName:
+        type: string
+        example: John
+      LastName:
+        type: string
+        example: Doe
+      Phone:
+        type: integer
+        example: 123456789
+      Email:
+        type: string
+        example: email@email.com
+      UserId:
+        type: integer
+        example: 0
 
 host: 165.227.103.4
 basePath: /LAMPAPI
