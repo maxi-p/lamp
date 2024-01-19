@@ -18,48 +18,68 @@ paths:
       - Users
       summary: Logs in to the contacts app
       operationId: dlLogin
-      description: Logs in to the contacts app
+      description: Logs in to the contacts app, returns an error string saying if it was successfull or not
       consumes:
       - application/json
       produces:
       - application/json
       parameters:
       - in: body
-        name: loginItem
+        name: loginUser
         description: Login
         schema:
           $ref: '#/definitions/Login'
       responses:
-        200:
+        "Empty Error String":
           description: OK
-        404:
-          description: URL Not Found
-        500:
-          description: Server Error
+        "No Records Found":
+          description: Login couldn't find the user in the Users table with their login and password
+  /Register.php:
+    post:
+      tags:
+      - Users
+      summary: Registers user into the contacts app
+      operationId: dlRegister
+      description: Registers user into the contacts app, if successful it adds the user onto the database
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: registerUser
+        description: Register
+        schema:
+          $ref: '#definitions/Register'
+      responses:
+        "Empty Error String":
+          description: OK
+        "User Already Exists":
+          description: There is already a login in the database with the same login as what was inputted.
+        "Failed to add User":
+          description: There is an error with the database and it failed to register the user
   /SearchContacts.php:
     post:
       tags:
       - Search
       summary: Searches contacts
       operationId: searchContact
-      description: Searches contacts from the contact app database
+      description: Searches contacts from the contact app database, returns an array of contacts that match the search.
       consumes:
       - application/json
       produces:
       - application/json
       parameters:
       - in: body
-        name: searchItem
+        name: searchContact
         description: Contact Search
         schema:
           $ref: '#/definitions/Search'
       responses:
-        200:
+        "Empty Error String":
           description: OK
-        404:
-          description: URL Not Found
-        500:
-          description: Server Error
+        "No Records Found":
+          description: Given the search, the database found no contacts that match it
           
 definitions:
   Login:
@@ -82,11 +102,30 @@ definitions:
     properties:
       UserId:
         type: integer
-        example: 1
+        example: 0
       search:
         type: string
-        example: "bl"
-
+        example: "John"
+  Register:
+    type: object
+    required:
+    - Login
+    - Password
+    - FirstName
+    - LastName
+    properties:
+      Login:
+        type: string
+        example: userName111
+      Password:
+        type: string
+        example: secretPass
+      FirstName:
+        type: string
+        example: John
+      LastName:
+        type: string
+        example: Doe
 
 host: 165.227.103.4
 basePath: /LAMPAPI
