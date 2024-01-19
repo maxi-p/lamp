@@ -5,7 +5,7 @@ database: COP4331
 
 endpoints to do:
 Login - Done
-Register
+Register - Done
 AddContact
 DeleteContact
 UpdateContact
@@ -20,4 +20,8 @@ SearchContacts.php:
 "UserId" : ,
 "search" : ""
 
-
+Register.php:
+"Login": "",
+"Password": "",
+"FirstName": "",
+"LastName": ""
