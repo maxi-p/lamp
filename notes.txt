@@ -7,6 +7,6 @@ endpoints to do:
 Login - Done
 Register - Done
 AddContact - Done
-DeleteContact
+DeleteContact - Done (Finish Documentation)
 UpdateContact
 SearchContacts - Done
