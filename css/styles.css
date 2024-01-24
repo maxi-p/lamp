@@ -1,0 +1,17 @@
+.contact-linker-name-header{
+    font-family: Alegreya;
+    font-size: 100px;
+    font-style: italic;
+    background: radial-gradient(circle, #3860ff, #68dcff);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-align: center;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}

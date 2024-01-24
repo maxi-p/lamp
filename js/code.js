@@ -46,7 +46,7 @@ function doLogin()
 
 				saveCookie();
 	
-				window.location.href = "color.html";
+				window.location.href = "home-page.html";
 			}
 		};
 		xhr.send(jsonPayload);
@@ -56,6 +56,63 @@ function doLogin()
 		document.getElementById("loginResult").innerHTML = err.message;
 	}
 
+}
+
+
+function doRegister() {
+    firstName = document.getElementById("firstName").value;
+    lastName = document.getElementById("lastName").value;
+
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+
+    //TODO: REGISTER VALIDATOR (firstName, lastName, username, password)) {
+    //var hash = md5(password);
+
+    document.getElementById("registerResult").innerHTML = "";
+
+    let tmp = {
+        FirstName: firstName,
+        LastName: lastName,
+        Login: username,
+        Password: password
+    };
+
+    let jsonPayload = JSON.stringify(tmp);
+
+    let url = urlBase + '/Register.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try {
+        xhr.onreadystatechange = function () {
+			if(this.readyState != 4){
+				return;
+			}
+            if (this.status == 200) {
+                
+                let jsonObject = JSON.parse(xhr.responseText);
+				document.getElementById("firstName").value = "";
+				document.getElementById("lastName").value = "";
+				document.getElementById("username").value = "";
+				document.getElementById("password").value = "";
+				document.getElementById("registerForm").style.display = "none";
+        		document.getElementById("loginForm").style.display = "block";
+                document.getElementById("registerResult").innerHTML = "User added";
+            }
+
+            else{
+                document.getElementById("registerResult").innerHTML = "User already exists";
+                return;
+            }
+        };
+
+        xhr.send(jsonPayload);
+    } catch (err) {
+        document.getElementById("registerResult").innerHTML = err.message;
+    }
 }
 
 function saveCookie()
