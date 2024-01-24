@@ -242,9 +242,9 @@ function loadContacts() {
                     text += "<td id='email" + j + "'>" + jsonObject.results[i].Email + "</td>";
                     text += "<td id='phone" + j + "'>" + jsonObject.results[i].Phone + "</td>";
                     text += "<td class='d-flex justify-content-center align-items-center'>" +
-                        "<button type='button' id='edit_button" + j + "' class='btn btn-outline-dark' onclick='edit_row(" + j + ")' data-mdb-ripple-init data-mdb-ripple-color='dark'>" + "Edit</button>" +
-                        "<button type='button' id='save_button" + j + "' class='btn btn-outline-dark' onclick='save_row(" + j + ")'>Sava</button>" +
-                        "<button type='button' onclick='delete_row(" + j + ")' class='btn btn-outline-danger'>Delete</button>" + "</td>";
+                        "<button type='button' id='edit_button" + j + "' class='btn btn-outline-dark' onclick='editContact(" + j + ")' data-mdb-ripple-init data-mdb-ripple-color='dark'>" + "Edit</button>" +
+                        "<button type='button' id='save_button" + j + "' class='btn btn-outline-dark' onclick='saveContact(" + j + ")'>Sava</button>" +
+                        "<button type='button' onclick='deleteContact(" + j + ")' class='btn btn-outline-danger'>Delete</button>" + "</td>";
                     text += "<tr/>"
                 }
                 document.getElementById("tbody").innerHTML = text;
@@ -255,6 +255,45 @@ function loadContacts() {
         console.log(err.message);
     }
 }
+
+function deleteContact(id) {
+    var namef_val = document.getElementById("first_Name" + id).innerText;
+    var namel_val = document.getElementById("last_Name" + id).innerText;
+    nameOne = namef_val.substring(0, namef_val.length);
+    nameTwo = namel_val.substring(0, namel_val.length);
+    let check = confirm('Confirm deletion of contact: ' + nameOne + ' ' + nameTwo);
+    if (check === true) {
+        document.getElementById("row" + id + "").outerHTML = "";
+        let tmp = {
+            FirstName: nameOne,
+            LastName: nameTwo,
+            UserId: userId
+        };
+
+        let jsonPayload = JSON.stringify(tmp);
+
+        let url = urlBase + '/DeleteContact.' + extension;
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        try {
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    console.log("Contact has been deleted");
+                    loadContacts();
+                }
+            };
+            xhr.send(jsonPayload);
+        } catch (err) {
+            console.log(err.message);
+        }
+
+    };
+
+}
+
 
 //TODO: 
 function searchColor()
