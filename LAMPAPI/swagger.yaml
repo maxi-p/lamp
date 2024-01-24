@@ -125,6 +125,30 @@ paths:
           description: OK
         "Contact Doesn't Exist":
           description: Given the search, the database found no contacts that match it
+  /UpdateContact.php:
+    post:
+      tags:
+      - Contacts
+      summary: Updates contacts
+      operationId: updateContact
+      description: Searches for a contact with the same name and id given. If successfull it edits the database with the new given name, phone, and email.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: updateContact
+        description: Contact Update
+        schema:
+          $ref: '#/definitions/UpdateContact'
+      responses:
+        "Empty Error String":
+          description: OK
+        "No Records Found":
+          description: With the given info the database found no contacts that match it
+        "Failed to Update Contact":
+          description: There was an error with the database itself.
           
 definitions:
   Login:
@@ -135,10 +159,10 @@ definitions:
     properties:
       Login:
         type: string
-        example: "fred"
+        example: fred
       Password:
         type: string
-        example: "secret"
+        example: secret
   Register:
     type: object
     required:
@@ -187,8 +211,8 @@ definitions:
         type: string
         example: Doe
       Phone:
-        type: integer
-        example: 123456789
+        type: string
+        example: 123-456-7890
       Email:
         type: string
         example: email@email.com
@@ -211,6 +235,39 @@ definitions:
       UserId:
         type: integer
         example: 0
+  UpdateContact:
+    type: object
+    required:
+    - FirstName
+    - LastName
+    - UserId
+    - NewFirstName
+    - NewLastName
+    - NewPhone
+    - NewEmail
+    properties:
+      FirstName:
+        type: string
+        example: John
+      LastName:
+        type: string
+        example: Doe
+      UserId:
+        type: integer
+        example: 0
+      NewFirstName:
+        type: string
+        example: Jane
+      NewLastName:
+        type: string
+        example: Doe
+      NewPhone:
+        type: string
+        example: 111-111-1111
+      NewEmail:
+        type: string
+        example: email@email.com
+
 host: 165.227.103.4
 basePath: /LAMPAPI
 schemes:

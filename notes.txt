@@ -8,5 +8,5 @@ Login - Done
 Register - Done
 AddContact - Done
 DeleteContact - Done
-UpdateContact - In Progess
+UpdateContact - Done
 SearchContacts - Done
