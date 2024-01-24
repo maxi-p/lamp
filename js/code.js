@@ -196,6 +196,11 @@ function addContact()
 			if (this.readyState == 4 && this.status == 200) 
 			{
 				document.getElementById("contactAddResult").innerHTML = "Contact has been added";
+				document.getElementById("contactTextFirst").value = "";
+				document.getElementById("contactTextLast").value = "";
+				document.getElementById("contactTextNumber").value = "";
+				document.getElementById("contactTextEmail").value = "";
+				loadContacts();
 			}
 		};
 		xhr.send(jsonPayload);
@@ -205,6 +210,50 @@ function addContact()
 		document.getElementById("contactAddResult").innerHTML = err.message;
 	}
 	
+}
+
+function loadContacts() {
+    let tmp = {
+        search: "",
+        UserId: userId
+    };
+
+    let jsonPayload = JSON.stringify(tmp);
+
+    let url = urlBase + '/SearchContacts.' + extension;
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let jsonObject = JSON.parse(xhr.responseText);
+                if (jsonObject.error) {
+                    console.log(jsonObject.error);
+                    return;
+                }
+                let text = ""
+                for (let i = 0; i < jsonObject.results.length; i++) {
+                    let j = jsonObject.results[i].ID;
+                    text += "<tr  class='table-active' id='row" + j + "'>"
+                    text += "<td id='first_Name" + j + "'>" + jsonObject.results[i].FirstName + "</td>";
+                    text += "<td id='last_Name" + j + "'>" + jsonObject.results[i].LastName + "</td>";
+                    text += "<td id='email" + j + "'>" + jsonObject.results[i].Email + "</td>";
+                    text += "<td id='phone" + j + "'>" + jsonObject.results[i].Phone + "</td>";
+                    text += "<td class='d-flex justify-content-center align-items-center'>" +
+                        "<button type='button' id='edit_button" + j + "' class='btn btn-outline-dark' onclick='edit_row(" + j + ")' data-mdb-ripple-init data-mdb-ripple-color='dark'>" + "Edit</button>" +
+                        "<button type='button' id='save_button" + j + "' class='btn btn-outline-dark' onclick='save_row(" + j + ")'>Sava</button>" +
+                        "<button type='button' onclick='delete_row(" + j + ")' class='btn btn-outline-danger'>Delete</button>" + "</td>";
+                    text += "<tr/>"
+                }
+                document.getElementById("tbody").innerHTML = text;
+            }
+        };
+        xhr.send(jsonPayload);
+    } catch (err) {
+        console.log(err.message);
+    }
 }
 
 //TODO: 

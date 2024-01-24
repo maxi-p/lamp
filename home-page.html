@@ -50,23 +50,21 @@
           <input type="text" id="contactTextNumber" placeholder="XXX-XXX-XXXX" required pattern="^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$">
           <input type="text" id="contactTextEmail" placeholder="name@email.com" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
           <button type="button" id="addContactButton" class="buttons font" onclick="addContact();"> Add Contact</button>
+          <span id="contactAddResult"></span>
       </div>
       <table class="table text-center" id="contact-table" style="position: absolute; width: 80%; margin: 100px;">
         <thead>
           <tr>
-            <th scope="col">#</th><th scope="col">First</th><th scope="col">Last</th><th scope="col">Email</th><th scope="col">Phone Number</th><th scope="col">Actions</th>
+            <th scope="col">First Name</th><th scope="col">Last Name</th><th scope="col">Email</th><th scope="col">Phone Number</th><th scope="col">Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="tbody">
           <tr class="table-active">
-            <th scope="row">1</th>
-            <td id="first-name">Mark</td>
-            <td id="last-name">Otto</td>
+            <td id="first_Name">Mark</td>
+            <td id="last_Name">Otto</td>
             <td id="email">@mdo</td>
-            <td id="phone-number">0000000000</td>
-            <td id="action-buttons" class="d-flex justify-content-center align-items-center">
-              <div class="btn-group">
-
+            <td id="phone">0000000000</td>
+            <td class="d-flex justify-content-center align-items-center">
               <button id="edit-button" type="button" class="btn btn-outline-dark" data-mdb-ripple-init data-mdb-ripple-color="dark">Edit</button>
               <button id="delete-button" type="button" class="btn btn-outline-danger" data-mdb-ripple-init data-mdb-ripple-color="dark">Delete</button>
             </td>
