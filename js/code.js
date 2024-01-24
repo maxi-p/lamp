@@ -41,8 +41,8 @@ function doLogin()
 					return;
 				}
 		
-				firstName = jsonObject.firstName;
-				lastName = jsonObject.lastName;
+				firstName = jsonObject.FirstName;
+				lastName = jsonObject.LastName;
 
 				saveCookie();
 	
@@ -127,6 +127,7 @@ function readCookie()
 {
 	userId = -1;
 	let data = document.cookie;
+	console.log(data);
 	let splits = data.split(",");
 	for(var i = 0; i < splits.length; i++) 
 	{
@@ -136,7 +137,7 @@ function readCookie()
 		{
 			firstName = tokens[1];
 		}
-		else if( tokens[0] == "lastName" )
+		else if( tokens[0] == "astName" )
 		{
 			lastName = tokens[1];
 		}
@@ -152,7 +153,8 @@ function readCookie()
 	}
 	else
 	{
-		// document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+		console.log("ASD");
+		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
 	}
 }
 
@@ -165,15 +167,24 @@ function doLogout()
 	window.location.href = "index.html";
 }
 
-function addColor()
+function addContact()
 {
-	let newColor = document.getElementById("colorText").value;
-	document.getElementById("colorAddResult").innerHTML = "";
+	let contactTextFirst = document.getElementById("contactTextFirst").value;
+	let contactTextLast = document.getElementById("contactTextLast").value;
+	let contactTextNumber = document.getElementById("contactTextNumber").value;
+	let contactTextEmail = document.getElementById("contactTextEmail").value;
+	document.getElementById("contactAddResult").innerHTML = "";
 
-	let tmp = {color:newColor,userId,userId};
+	let tmp = {
+		FirstName:contactTextFirst,
+		LastName:contactTextLast,
+		Phone:contactTextNumber,
+		Email:contactTextEmail,
+		UserId:userId
+	};
 	let jsonPayload = JSON.stringify( tmp );
 
-	let url = urlBase + '/AddColor.' + extension;
+	let url = urlBase + '/AddContact.' + extension;
 	
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -184,18 +195,19 @@ function addColor()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				document.getElementById("colorAddResult").innerHTML = "Color has been added";
+				document.getElementById("contactAddResult").innerHTML = "Contact has been added";
 			}
 		};
 		xhr.send(jsonPayload);
 	}
 	catch(err)
 	{
-		document.getElementById("colorAddResult").innerHTML = err.message;
+		document.getElementById("contactAddResult").innerHTML = err.message;
 	}
 	
 }
 
+//TODO: 
 function searchColor()
 {
 	let srch = document.getElementById("searchText").value;
