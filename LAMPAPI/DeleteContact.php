@@ -1,4 +1,4 @@
-<?php // Done now to work on the documentation
+<?php
 
 	$inData = getRequestInfo();
 

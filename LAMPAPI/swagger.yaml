@@ -3,7 +3,6 @@ info:
   description: This is the API documentation for the COP 4331 Contacts App
   version: 1.0.0
   title: Contacts App
-  # put the contact info for your development or API team
   contact:
     email: je127364@ucf.edu
 
@@ -18,7 +17,7 @@ paths:
       - Users
       summary: Logs in to the contacts app
       operationId: dlLogin
-      description: Logs in to the contacts app, returns an error string saying if it was successfull or not
+      description: Logs in to the contacts app, returns empty info with an error string saying if it worked or not
       consumes:
       - application/json
       produces:
@@ -40,7 +39,7 @@ paths:
       - Users
       summary: Registers user into the contacts app
       operationId: dlRegister
-      description: Registers user into the contacts app, if successful it adds the user onto the database
+      description: Registers user into the contacts app, if successful it adds the user onto the database and writes their info onto a json with empty error string
       consumes:
       - application/json
       produces:
@@ -64,7 +63,7 @@ paths:
       - Contacts
       summary: Adds contact
       operationId: addContact
-      description: Adds a contact to the database, makes sure that there isn't an existing contact with the same first name, last name, and user id.
+      description: Adds a contact to the database, makes sure that there isn't an existing contact with the same first name, last name, and user id. Returns contact info with empty error string if successfull
       consumes:
       - application/json
       produces:
@@ -74,19 +73,21 @@ paths:
         name: addContact
         description: Adds Contact
         schema:
-          $ref: '#/definitions/Add'
+          $ref: '#/definitions/AddContact'
       responses:
         "Empty Error String":
           description: OK
         "Contact already exists":
           description: Found an existing contact with the same name and user id.
+        "Failed to add contact":
+          description: An error with the database occured and couldn't add the contact
   /SearchContacts.php:
     post:
       tags:
       - Contacts
       summary: Searches contacts
       operationId: searchContact
-      description: Searches contacts from the contact app database, returns an array of contacts that match the search.
+      description: Searches contacts from the contact app database, returns an array of contacts that match the search. This array will hold the contact's first name, last name, phone, email, userID, and ID.
       consumes:
       - application/json
       produces:
@@ -96,11 +97,33 @@ paths:
         name: searchContact
         description: Contact Search
         schema:
-          $ref: '#/definitions/Search'
+          $ref: '#/definitions/SearchContact'
       responses:
         "Empty Error String":
           description: OK
         "No Records Found":
+          description: Given the search, the database found no contacts that match it
+  /DeleteContact.php:
+    post:
+      tags:
+      - Contacts
+      summary: Deletes contacts
+      operationId: deleteContact
+      description: Searches for a contact with the same name and id given. If successfull it returns an emtpy error string.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: deleteContact
+        description: Contact Delete
+        schema:
+          $ref: '#/definitions/DeleteContact'
+      responses:
+        "Empty Error String":
+          description: OK
+        "Contact Doesn't Exist":
           description: Given the search, the database found no contacts that match it
           
 definitions:
@@ -116,18 +139,6 @@ definitions:
       Password:
         type: string
         example: "secret"
-  Search:
-    type: object
-    required:
-    - UserId
-    - search
-    properties:
-      UserId:
-        type: integer
-        example: 0
-      search:
-        type: string
-        example: "John"
   Register:
     type: object
     required:
@@ -148,7 +159,19 @@ definitions:
       LastName:
         type: string
         example: Doe
-  Add:
+  SearchContact:
+    type: object
+    required:
+    - UserId
+    - search
+    properties:
+      UserId:
+        type: integer
+        example: 0
+      search:
+        type: string
+        example: "John"
+  AddContact:
     type: object
     required:
     - FirstName
@@ -172,7 +195,22 @@ definitions:
       UserId:
         type: integer
         example: 0
-
+  DeleteContact:
+    type: object
+    required:
+    - FirstName
+    - LastName
+    - UserId
+    properties:
+      FirstName:
+        type: string
+        example: John
+      LastName:
+        type: string
+        example: Doe
+      UserId:
+        type: integer
+        example: 0
 host: 165.227.103.4
 basePath: /LAMPAPI
 schemes:
