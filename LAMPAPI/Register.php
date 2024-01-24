@@ -1,11 +1,12 @@
 <?php
 
 	$inData = getRequestInfo();
+
+	$Login = $inData["Login"];
+	$Password = $inData["Password"];
+	$FirstName = $inData["FirstName"];
+	$LastName = $inData["LastName"];
 	
-	$Login = "";
-	$Password = "";
-	$FirstName = "";
-	$LastName = "";
 	$searchCount = 0;
 
 	$conn = new mysqli("localhost", "EatSand", "yurt", "COP4331");
@@ -16,7 +17,7 @@
 	else
 	{
 		$stmt = $conn->prepare("select * from Users where Login like ?");
-		$stmt->bind_param("s", $inData["Login"]);
+		$stmt->bind_param("s", $Login);
 		$stmt->execute();
 		$result = $stmt->get_result();
 
@@ -29,11 +30,11 @@
 		if ($searchCount == 0)
 		{
 			$stmt = $conn->prepare("insert into Users (FirstName,LastName,Login,Password) VALUES (?, ?, ?, ?)");
-			$stmt->bind_param("ssss", $inData["FirstName"], $inData["LastName"], $inData["Login"], $inData["Password"]);
+			$stmt->bind_param("ssss", $FirstName, $LastName, $Login, $Password);
 
 			if ($stmt->execute())
 			{
-				returnWithInfo( $inData['FirstName'], $inData['LastName'], $inData["Login"], $inData["Password"] );
+				returnWithInfo( $FirstName, $LastName, $Login, $Password );
 			}
 			else
 			{
