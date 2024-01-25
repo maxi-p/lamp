@@ -212,6 +212,48 @@ function addContact()
 	
 }
 
+function saveContact(id){
+	var newFirstName = document.getElementById("namef_text" + id).value;
+    var newLastName = document.getElementById("namel_text" + id).value;
+    var newEmail = document.getElementById("email_text" + id).value;
+    var newPhone = document.getElementById("phone_text" + id).value;
+
+    document.getElementById("first_Name" + id).innerHTML = newFirstName;
+    document.getElementById("last_Name" + id).innerHTML = newLastName;
+    document.getElementById("email" + id).innerHTML = newEmail;
+    document.getElementById("phone" + id).innerHTML = newPhone;
+
+    document.getElementById("edit_button" + id).style.display = "inline-block";
+    document.getElementById("save_button" + id).style.display = "none";
+
+    let tmp = {
+        NewFirstName: newFirstName,
+        NewLastName: newLastName,
+        NewEmail: newEmail,
+        NewPhone: newPhone,
+        ID: id
+    };
+
+    let jsonPayload = JSON.stringify(tmp);
+
+    let url = urlBase + '/UpdateContact.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log("Contact has been updated");
+                loadContacts();
+            }
+        };
+        xhr.send(jsonPayload);
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
 function loadContacts() {
     let tmp = {
         search: "",
@@ -243,7 +285,7 @@ function loadContacts() {
                     text += "<td id='phone" + j + "'>" + jsonObject.results[i].Phone + "</td>";
                     text += "<td class='d-flex justify-content-center align-items-center'>" +
                         "<button type='button' id='edit_button" + j + "' class='btn btn-outline-dark' onclick='editContact(" + j + ")' data-mdb-ripple-init data-mdb-ripple-color='dark'>" + "Edit</button>" +
-                        "<button type='button' id='save_button" + j + "' class='btn btn-outline-dark' onclick='saveContact(" + j + ")'>Sava</button>" +
+                        "<button type='button' id='save_button" + j + "' class='btn btn-outline-dark' onclick='saveContact(" + j + ")' style='display: none' >Save</button>" +
                         "<button type='button' onclick='deleteContact(" + j + ")' class='btn btn-outline-danger'>Delete</button>" + "</td>";
                     text += "<tr/>"
                 }
@@ -254,6 +296,26 @@ function loadContacts() {
     } catch (err) {
         console.log(err.message);
     }
+}
+
+function editContact(id){
+	document.getElementById("edit_button" + id).style.display = "none";
+    document.getElementById("save_button" + id).style.display = "inline-block";
+
+    var firstNameI = document.getElementById("first_Name" + id);
+    var lastNameI = document.getElementById("last_Name" + id);
+    var email = document.getElementById("email" + id);
+    var phone = document.getElementById("phone" + id);
+
+    // var namef_data = firstNameI.innerText;
+    // var namel_data = lastNameI.innerText;
+    // var email_data = email.innerText;
+    // var phone_data = phone.innerText;
+
+    firstNameI.innerHTML = "<input type='text' id='namef_text" + id + "' value='" + firstNameI.innerText + "'>";
+    lastNameI.innerHTML = "<input type='text' id='namel_text" + id + "' value='" + lastNameI.innerText + "'>";
+    email.innerHTML = "<input type='text' id='email_text" + id + "' value='" + email.innerText + "'>";
+    phone.innerHTML = "<input type='text' id='phone_text" + id + "' value='" + phone.innerText + "'>"
 }
 
 function deleteContact(id) {
