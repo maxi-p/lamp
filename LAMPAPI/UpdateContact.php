@@ -2,9 +2,7 @@
 
 	$inData = getRequestInfo();
 
-	$FirstName = $inData["FirstName"];
-	$LastName = $inData["LastName"];
-	$UserId = $inData["UserId"];
+	$ID = $inData["ID"];
 
 	$NewFirstName = $inData["NewFirstName"];
 	$NewLastName = $inData["NewLastName"];
@@ -21,18 +19,15 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("select * from Contacts where (FirstName like ? and LastName like ?) and UserID=?");
-		$stmt->bind_param("sss", $FirstName, $LastName, $UserId);
+		$stmt = $conn->prepare("select * from Contacts where ID=?");
+		$stmt->bind_param("s", $ID);
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
-		$ID = "";
 		
 		while($row = $result->fetch_assoc())
 		{
-
 			$searchCount++;
-			$ID = $row["ID"];
 		}
 		
 		if( $searchCount == 0 )
@@ -46,7 +41,7 @@
 
 			if ($stmt->execute())
 			{
-				returnWithInfo($NewFirstName, $NewLastName, $NewPhone, $NewEmail, $UserId, $ID);
+				returnWithInfo($NewFirstName, $NewLastName, $NewPhone, $NewEmail, $ID);
 			}
 			else
 			{
@@ -75,9 +70,9 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo( $firstName, $lastName, $phone, $email, $userId, $ID)
+	function returnWithInfo( $firstName, $lastName, $phone, $email, $ID)
 	{
-		$retValue = '{"UserId":"' . $userId . '","FirstName":"' . $firstName . '","LastName":"' . $lastName . '","Phone":"' . $phone . '","Email":"' . $email . '","ID":"' . $ID . '","error":""}';
+		$retValue = '{"ID":"' . $ID . '","FirstName":"' . $firstName . '","LastName":"' . $lastName . '","Phone":"' . $phone . '","Email":"' . $email . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	

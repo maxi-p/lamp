@@ -131,7 +131,7 @@ paths:
       - Contacts
       summary: Updates contacts
       operationId: updateContact
-      description: Searches for a contact with the same name and id given. If successfull it edits the database with the new given name, phone, and email.
+      description: Searches for a contact with the id given. If successfull it edits the database with the new given name, phone, and email.
       consumes:
       - application/json
       produces:
@@ -238,21 +238,13 @@ definitions:
   UpdateContact:
     type: object
     required:
-    - FirstName
-    - LastName
-    - UserId
+    - ID
     - NewFirstName
     - NewLastName
     - NewPhone
     - NewEmail
     properties:
-      FirstName:
-        type: string
-        example: John
-      LastName:
-        type: string
-        example: Doe
-      UserId:
+      ID:
         type: integer
         example: 0
       NewFirstName:
