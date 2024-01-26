@@ -1,9 +1,12 @@
 const urlBase = 'http://165.227.103.4/LAMPAPI';
 const extension = 'php';
 
-let userId = 0;
-let firstName = "";
-let lastName = "";
+//hardcoded!!!
+//TODO: change to 0, "", "", and remove saveCookie()....
+let userId = 7;
+let firstName = "asd";
+let lastName = "asd";
+saveCookie();
 
 function doLogin()
 {
