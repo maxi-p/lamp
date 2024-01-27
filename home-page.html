@@ -1,97 +1,248 @@
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <title>Main Page</title>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ContactLinker</title>
 
-      <!-- Bootstrap CSS -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
-      <script type="text/javascript" src="js/code.js"></script>
-      <link href="css/styles.css" rel="stylesheet">	
-      <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() 
-        {
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script type="text/javascript" src="js/code.js"></script>
+    <link href="css/styles.css" rel="stylesheet" />
+    <script type="text/javascript">
+      document.addEventListener(
+        "DOMContentLoaded",
+        function () {
           readCookie();
           loadContacts();
-        }, false);
-        </script>
-    </head>
-    <body>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar" style="position: fixed; width: 100%; z-index: 1000;">
-        <div class="container-fluid" id="bar-container">
+        },
+        false
+      );
+    </script>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark"
+      id="navbar"
+      style="position: fixed; width: 100%; z-index: 1000"
+    >
+      <div class="container-fluid" id="bar-container">
+        <!-- Left corner - Image placeholder -->
+        <a class="navbar-brand" href="#" id="left-corner">
+          <img
+            src="images/logo-no-background.png"
+            height="30"
+            style="margin-right: 10px"
+          />ContactLinker
+        </a>
 
-          <!-- Left corner - Image placeholder -->
-          <a class="navbar-brand" href="#" id="left-corner">
-            <img src="path/to/your/image-placeholder.png" height="30" />ContactLinker
-          </a>
-
-          <!-- Middle - Create New Contact and About Us links -->
-          <div class="d-flex mx-auto" id="middle-corner">
-            <a href="#" class="nav-link me-2" id="create-link" style="color: white">Create New Contact</a>
-            <a href="#" class="nav-link" id="about-link" style="color: white">About Us</a>
-          </div>
-
-          <!-- Search form -->
-          <form class="d-flex input-group w-auto ms-auto" id="search-form">
-            <input onkeyup="searchContacts();" type="text" class="form-control rounded" id="search-bar" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
-            <button type="button" id="searchColorButton" class="buttons"> Search</button><br />
-          </form>
-
-          <!-- Right corner - Logout link -->
-          <div class="ms-auto" id="right-corner">
-            <button type="button" id="logoutButton" class="nav-link"  onclick="doLogout();" style="color: white"> Log Out </button>
-          </div>
+        <!-- Middle - Create New Contact and About Us links -->
+        <div class="d-flex mx-auto" id="middle-corner">
+          <button type="button" class="btn btn-dark" data-mdb-ripple-init>
+            Create New Contact
+          </button>
+          <a href="#" class="nav-link" id="about-link" style="color: white"
+            >About Us</a
+          >
         </div>
-      </nav>
-      <span id="userName"></span><br />
-      <br/><br/><br/>
-      <div class="addContacts">
-          <input type="text" id="contactTextFirst" placeholder="First Name" required>
-          <input type="text" id="contactTextLast" placeholder="Last Name" required>
-          <input type="text" id="contactTextNumber" placeholder="XXX-XXX-XXXX" required pattern="^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$">
-          <input type="text" id="contactTextEmail" placeholder="name@email.com" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
-          <button type="button" id="addContactButton" class="buttons font" onclick="addContact();"> Add Contact</button>
-          <span id="contactAddResult"></span>
+
+        <!-- Search form -->
+        <form
+          class="d-flex input-group w-auto ms-auto justify-content-center"
+          id="search-form"
+        >
+          <input
+            onkeyup="searchContacts();"
+            type="text"
+            class="form-control rounded"
+            id="search-bar"
+            placeholder="Search"
+            aria-label="Search"
+            aria-describedby="search-addon"
+          />
+          <button
+            type="button"
+            id="searchColorButton"
+            class="buttons btn btn-dark"
+            data-mdb-ripple-init
+            style="border-radius: 10px; margin-left: 10px"
+          >
+            Search</button
+          ><br />
+        </form>
+
+        <!-- Right corner - Logout link -->
+        <div class="ms-auto" id="right-corner">
+          <button
+            type="button"
+            id="logoutButton"
+            class="nav-link btn btn-dark btn-rounded"
+            data-mdb-ripple-init
+            onclick="doLogout();"
+            style="color: #ff4057"
+          >
+            Log Out
+          </button>
+        </div>
       </div>
-      <table class="table text-center" id="contact-table" style="position: absolute; width: 80%; margin: 100px;">
-        <thead>
-          <tr>
-            <th scope="col">First Name</th><th scope="col">Last Name</th><th scope="col">Email</th><th scope="col">Phone Number</th><th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody id="tbody">
-          <tr class="table-active">
-            <td id="first_Name">Mark</td>
-            <td id="last_Name">Otto</td>
-            <td id="email">@mdo</td>
-            <td id="phone">0000000000</td>
-            <td class="d-flex justify-content-center align-items-center">
-              <button id="edit-button" type="button" class="btn btn-outline-dark" data-mdb-ripple-init data-mdb-ripple-color="dark">Edit</button>
-              <button id="delete-button" type="button" class="btn btn-outline-danger" data-mdb-ripple-init data-mdb-ripple-color="dark">Delete</button>
-            </td>
-          </tr>
-          <tr class="table-active">
-            <td id="first_Name"><input type='text' id='namef_text" + id + "' value='" + firstNameI.innerText + "'></td>
-            <td id="last_Name"><input type='text' id='namel_text" + id + "' value='" + lastNameI.innerText + "'></td>
-            <td id="email"><input type='text' id='email_text" + id + "' value='" + email.innerText + "'></td>
-            <td id="phone"><input type='text' id='phone_text" + id + "' value='" + phone.innerText + "'></td>
-            <td class="d-flex justify-content-center align-items-center">
-              <button id="edit-button" type="button" class="btn btn-outline-dark" data-mdb-ripple-init data-mdb-ripple-color="dark">Edit</button>
-              <button id="delete-button" type="button" class="btn btn-outline-danger" data-mdb-ripple-init data-mdb-ripple-color="dark">Delete</button>
-            </td>
-          </tr>
+    </nav>
+    <span id="userName"></span><br />
+    <!-- <br /><br /><br /> -->
+    <div class="addContacts">
+      <input
+        type="text"
+        id="contactTextFirst"
+        placeholder="First Name"
+        required
+      />
+      <input
+        type="text"
+        id="contactTextLast"
+        placeholder="Last Name"
+        required
+      />
+      <input
+        type="text"
+        id="contactTextNumber"
+        placeholder="XXX-XXX-XXXX"
+        required
+        pattern="^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$"
+      />
+      <input
+        type="text"
+        id="contactTextEmail"
+        placeholder="name@email.com"
+        pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+        required
+      />
+      <button
+        type="button"
+        id="addContactButton"
+        class="buttons font"
+        onclick="addContact();"
+      >
+        Add Contact
+      </button>
+      <span id="contactAddResult"></span>
+    </div>
+    <table
+      class="table text-center"
+      id="contact-table"
+      style="position: absolute; width: 80%; margin: 100px"
+    >
+      <thead>
+        <tr>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
 
-          
-    
-    
-    
-          
-          
-        </tbody>
-      </table>
+      <tbody id="tbody">
+        <tr class="table-active" contenteditable="true">
+          <td id="first_Name">Mark</td>
+          <td id="last_Name">Otto</td>
+          <td id="email">@mdo</td>
+          <td id="phone">0000000000</td>
+          <td class="d-flex justify-content-center align-items-center">
+            <button
+              id="edit-button"
+              type="button"
+              class="btn btn-outline-dark"
+              data-mdb-ripple-init
+              data-mdb-ripple-color="dark"
+              contenteditable="false"
+            >
+              Edit
+            </button>
+            <button
+              id="delete-button"
+              type="button"
+              class="btn btn-outline-danger"
+              data-mdb-ripple-init
+              data-mdb-ripple-color="dark"
+              contenteditable="false"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+        <tr class="table-active" contenteditable="false">
+          <td id="first_Name">
+            <input
+              type="text"
+              id='namef_text" + id + "'
+              value='" + firstNameI.innerText + "'
+              placeholder="First Name"
+              class="editable"
+              contenteditable="true"
+            />
+          </td>
+          <td id="last_Name">
+            <input
+              type="text"
+              id='namel_text" + id + "'
+              value='" + lastNameI.innerText + "'
+              placeholder="Last Name"
+            />
+          </td>
+          <td id="email">
+            <input
+              type="text"
+              id='email_text" + id + "'
+              value='" + email.innerText + "'
+              placeholder="Email"
+            />
+          </td>
+          <td id="phone">
+            <input
+              type="text"
+              id='phone_text" + id + "'
+              value='" + phone.innerText + "'
+              placeholder="XXX-XXX-XXXX"
+            />
+          </td>
+          <td class="d-flex justify-content-center align-items-center">
+            <button
+              id="edit-button"
+              type="button"
+              class="btn btn-outline-dark"
+              data-mdb-ripple-init
+              data-mdb-ripple-color="dark"
+              contenteditable="false"
+            >
+              Edit
+            </button>
+            <button
+              id="delete-button"
+              type="button"
+              class="btn btn-outline-danger"
+              data-mdb-ripple-init
+              data-mdb-ripple-color="dark"
+              contenteditable="false"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-      <img style="width: 100%;" src="https://images.pexels.com/photos/3616764/pexels-photo-3616764.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
+    <img
+      style="width: 100%"
+      src="https://images.pexels.com/photos/3616764/pexels-photo-3616764.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    />
 
-      <!-- Bootstrap JS -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    </body>
-  </html>
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
