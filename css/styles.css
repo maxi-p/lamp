@@ -1,11 +1,11 @@
-.contact-linker-name-header{
-    font-family: Alegreya;
-    font-size: 100px;
-    font-style: italic;
-    background: radial-gradient(circle, #3860ff, #68dcff);
-    -webkit-background-clip: text;
-    color: transparent;
-    text-align: center;
+.contact-linker-name-header {
+  font-family: Alegreya;
+  font-size: 100px;
+  font-style: italic;
+  background: radial-gradient(circle, #3860ff, #68dcff);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-align: center;
 }
 
 .divider:after,
@@ -17,16 +17,97 @@
 }
 
 .buttons {
-    padding: 10px 0px 15px 0px;
-    display: block;
+  padding: 10px 0px 15px 0px;
+  display: block;
 }
 
-
 .addContacts {
-    align-self: center;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
 }
 
 .addContacts input {
-    border: 1px solid black;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
+.addContacts button {
+  width: 100%;
+  padding: 10px;
+  background-color: #b3a9a1;
+  color: #f7f7f7;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.6s ease;
+}
+
+.addContacts button:hover {
+  background-color: #383837;
+}
+
+[contenteditable="true"] {
+  outline: none;
+}
+
+.table-active[contenteditable="true"] {
+  animation: popOut 0.5s ease-in-out;
+
+  transform: scale(1.05);
+  box-shadow: 0 0 5px rgb(0, 0, 0);
+}
+
+@keyframes popOut {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+  25% {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: scale(0.9);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  75% {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.animated-image {
+  padding: 65px;
+  overflow: hidden;
+}
+
+@keyframes logoAnimation {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+.rotate {
+  animation: logoAnimation 4s ease-in-out;
+}
