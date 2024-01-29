@@ -1,12 +1,9 @@
 const urlBase = 'http://165.227.103.4/LAMPAPI';
 const extension = 'php';
 
-//hardcoded!!!
-//TODO: change to 0, "", "", and remove saveCookie()....
-let userId = 7;
-let firstName = "asd";
-let lastName = "asd";
-saveCookie();
+let userId = 0;
+let firstName = "";
+let lastName = "";
 
 function doLogin()
 {
@@ -203,6 +200,7 @@ function addContact()
 				document.getElementById("contactTextLast").value = "";
 				document.getElementById("contactTextNumber").value = "";
 				document.getElementById("contactTextEmail").value = "";
+                document.getElementById("addContactToggle").style.display = "none";
 				loadContacts();
 			}
 		};
@@ -216,15 +214,20 @@ function addContact()
 }
 
 function saveContact(id){
-	var newFirstName = document.getElementById("namef_text" + id).value;
+    
+    var newFirstName = document.getElementById("namef_text" + id).value;
     var newLastName = document.getElementById("namel_text" + id).value;
     var newEmail = document.getElementById("email_text" + id).value;
-    var newPhone = document.getElementById("phone_text" + id).value;
+    var newPhone = document.getElementById("phone_text" + id).value
 
     document.getElementById("first_Name" + id).innerHTML = newFirstName;
     document.getElementById("last_Name" + id).innerHTML = newLastName;
     document.getElementById("email" + id).innerHTML = newEmail;
     document.getElementById("phone" + id).innerHTML = newPhone;
+
+    // Bryans implementation
+    document.getElementById("row" + id).contentEditable = false;
+
 
     document.getElementById("edit_button" + id).style.display = "inline-block";
     document.getElementById("save_button" + id).style.display = "none";
@@ -281,7 +284,7 @@ function loadContacts() {
                 let text = ""
                 for (let i = 0; i < jsonObject.results.length; i++) {
                     let j = jsonObject.results[i].ID;
-                    text += "<tr  class='table-active' id='row" + j + "'>"
+                    text += "<tr  class='table-active' id='row" + j + "' contenteditable='false'>"
                     text += "<td id='first_Name" + j + "'>" + jsonObject.results[i].FirstName + "</td>";
                     text += "<td id='last_Name" + j + "'>" + jsonObject.results[i].LastName + "</td>";
                     text += "<td id='email" + j + "'>" + jsonObject.results[i].Email + "</td>";
@@ -305,20 +308,24 @@ function editContact(id){
 	document.getElementById("edit_button" + id).style.display = "none";
     document.getElementById("save_button" + id).style.display = "inline-block";
 
+    //Bryans implementation
+    document.getElementById("row" + id).contentEditable = true;
+
     var firstNameI = document.getElementById("first_Name" + id);
     var lastNameI = document.getElementById("last_Name" + id);
     var email = document.getElementById("email" + id);
     var phone = document.getElementById("phone" + id);
 
-    // var namef_data = firstNameI.innerText;
-    // var namel_data = lastNameI.innerText;
-    // var email_data = email.innerText;
-    // var phone_data = phone.innerText;
+    //Widths
+    var firstNameW = firstNameI.offsetWidth;
+    var lastNameW = lastNameI.offsetWidth;
+    var emailW = email.offsetWidth;
+    var phoneW = phone.offsetWidth;
 
-    firstNameI.innerHTML = "<input type='text' id='namef_text" + id + "' value='" + firstNameI.innerText + "'>";
-    lastNameI.innerHTML = "<input type='text' id='namel_text" + id + "' value='" + lastNameI.innerText + "'>";
-    email.innerHTML = "<input type='text' id='email_text" + id + "' value='" + email.innerText + "'>";
-    phone.innerHTML = "<input type='text' id='phone_text" + id + "' value='" + phone.innerText + "'>"
+    firstNameI.innerHTML =  "<input type='text' style='width:"+firstNameW+"px;text-align:center;background-color:WhiteSmoke;opacity: 0.5;' id='namef_text" + id + "' value='" + firstNameI.innerText + "'>";
+    lastNameI.innerHTML =   "<input type='text' style='width:"+lastNameW+"px;text-align:center;background-color:WhiteSmoke;opacity: 0.5;' id='namel_text" + id + "' value='" + lastNameI.innerText + "'>";
+    email.innerHTML =       "<input type='text' style='width:"+emailW+"px;text-align:center;background-color:WhiteSmoke;opacity: 0.5;' id='email_text" + id + "' value='" + email.innerText + "'>";
+    phone.innerHTML =       "<input type='text' style='width:"+phoneW+"px;text-align:center;background-color:WhiteSmoke;opacity: 0.5;' id='phone_text" + id + "' value='" + phone.innerText + "'>"
 }
 
 function deleteContact(id) {
@@ -357,6 +364,18 @@ function deleteContact(id) {
 
     };
 
+}
+
+function createContact(){
+    document.getElementById("addContactToggle").style.display = "block";
+}
+
+function cancelAddContact(){
+    document.getElementById("contactTextFirst").value = "";
+	document.getElementById("contactTextLast").value = "";
+	document.getElementById("contactTextNumber").value = "";
+	document.getElementById("contactTextEmail").value = "";
+    document.getElementById("addContactToggle").style.display = "none";
 }
 
 function searchContacts() {

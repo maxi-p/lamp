@@ -41,10 +41,10 @@
 
         <!-- Middle - Create New Contact and About Us links -->
         <div class="d-flex mx-auto" id="middle-corner">
-          <button type="button" class="btn btn-dark" data-mdb-ripple-init>
+          <button type="button" onclick="createContact();" class="btn btn-dark" data-mdb-ripple-init>
             Create New Contact
           </button>
-          <a href="#" class="nav-link" id="about-link" style="color: white"
+          <a  class="nav-link" id="about-link" style="color: white"
             >About Us</a
           >
         </div>
@@ -91,7 +91,7 @@
     </nav>
     <span id="userName"></span><br />
     <!-- <br /><br /><br /> -->
-    <div class="addContacts">
+    <div class="addContacts" id="addContactToggle">
       <input
         type="text"
         id="contactTextFirst"
@@ -126,6 +126,14 @@
       >
         Add Contact
       </button>
+      <button
+        type="button"
+        id="addContactButton"
+        class="buttons font"
+        onclick="cancelAddContact();"
+      >
+        Cancel
+      </button>
       <span id="contactAddResult"></span>
     </div>
     <table
@@ -144,92 +152,6 @@
       </thead>
 
       <tbody id="tbody">
-        <tr class="table-active" contenteditable="true">
-          <td id="first_Name">Mark</td>
-          <td id="last_Name">Otto</td>
-          <td id="email">@mdo</td>
-          <td id="phone">0000000000</td>
-          <td class="d-flex justify-content-center align-items-center">
-            <button
-              id="edit-button"
-              type="button"
-              class="btn btn-outline-dark"
-              data-mdb-ripple-init
-              data-mdb-ripple-color="dark"
-              contenteditable="false"
-            >
-              Edit
-            </button>
-            <button
-              id="delete-button"
-              type="button"
-              class="btn btn-outline-danger"
-              data-mdb-ripple-init
-              data-mdb-ripple-color="dark"
-              contenteditable="false"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-        <tr class="table-active" contenteditable="false">
-          <td id="first_Name">
-            <input
-              type="text"
-              id='namef_text" + id + "'
-              value='" + firstNameI.innerText + "'
-              placeholder="First Name"
-              class="editable"
-              contenteditable="true"
-            />
-          </td>
-          <td id="last_Name">
-            <input
-              type="text"
-              id='namel_text" + id + "'
-              value='" + lastNameI.innerText + "'
-              placeholder="Last Name"
-            />
-          </td>
-          <td id="email">
-            <input
-              type="text"
-              id='email_text" + id + "'
-              value='" + email.innerText + "'
-              placeholder="Email"
-            />
-          </td>
-          <td id="phone">
-            <input
-              type="text"
-              id='phone_text" + id + "'
-              value='" + phone.innerText + "'
-              placeholder="XXX-XXX-XXXX"
-            />
-          </td>
-          <td class="d-flex justify-content-center align-items-center">
-            <button
-              id="edit-button"
-              type="button"
-              class="btn btn-outline-dark"
-              data-mdb-ripple-init
-              data-mdb-ripple-color="dark"
-              contenteditable="false"
-            >
-              Edit
-            </button>
-            <button
-              id="delete-button"
-              type="button"
-              class="btn btn-outline-danger"
-              data-mdb-ripple-init
-              data-mdb-ripple-color="dark"
-              contenteditable="false"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
       </tbody>
     </table>
 
