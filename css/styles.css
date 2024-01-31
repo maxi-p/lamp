@@ -27,6 +27,8 @@
   align-items: center;
   justify-content: center;
   position: fixed;
+  width: 300px;
+  height: 380px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -46,7 +48,7 @@
   border-radius: 4px;
 }
 
-.addContacts button {
+#addContactButton {
   width: 100%;
   padding: 10px;
   background-color: #b3a9a1;
@@ -57,7 +59,19 @@
   transition: background-color 0.6s ease;
 }
 
-.addContacts button:hover {
+#cancelContactButton {
+  width: 100%;
+  padding: 10px;
+  background-color: #c2c8cf;
+  color: #f7f7f7;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.6s ease;
+}
+
+#cancelContactButton:hover,
+#addContactButton:hover {
   background-color: #383837;
 }
 
