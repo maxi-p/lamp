@@ -31,7 +31,7 @@
     >
       <div class="container-fluid" id="bar-container">
         <!-- Left corner - Image placeholder -->
-        <a class="navbar-brand" href="#" id="left-corner">
+        <a class="navbar-brand" id="left-corner">
           <img
             src="images/logo-no-background.png"
             height="30"
@@ -41,12 +41,17 @@
 
         <!-- Middle - Create New Contact and About Us links -->
         <div class="d-flex mx-auto" id="middle-corner">
-          <button type="button" onclick="createContact();" class="btn btn-dark" data-mdb-ripple-init>
+          <button
+            type="button"
+            onclick="createContact();"
+            class="btn btn-dark"
+            data-mdb-ripple-init
+          >
             Create New Contact
           </button>
-          <a href="about-page.html" class="nav-link" id="about-link" style="color: white"
-            >About Us</a
-          >
+          <button type="button" class="btn btn-dark" data-mdb-ripple-init>
+            About Us
+          </button>
         </div>
 
         <!-- Search form -->
@@ -126,9 +131,10 @@
       >
         Add Contact
       </button>
+      <br />
       <button
         type="button"
-        id="addContactButton"
+        id="cancelContactButton"
         class="buttons font"
         onclick="cancelAddContact();"
       >
@@ -151,8 +157,7 @@
         </tr>
       </thead>
 
-      <tbody id="tbody">
-      </tbody>
+      <tbody id="tbody"></tbody>
     </table>
 
     <img
