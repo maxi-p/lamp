@@ -1,12 +1,9 @@
-const urlBase = 'http://165.227.103.4/LAMPAPI';
+const urlBase = 'http://contact-linker.xyz/LAMPAPI';
 const extension = 'php';
 
-//hardcoded!!!
-//TODO: change to 0, "", "", and remove saveCookie()....
-let userId = 7;
-let firstName = "asd";
-let lastName = "asd";
-saveCookie();
+let userId = 0;
+let firstName = "";
+let lastName = "";
 
 function doLogin()
 {
@@ -69,7 +66,30 @@ function doRegister() {
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
 
-    //TODO: REGISTER VALIDATOR (firstName, lastName, username, password)) {
+    const firstName_validation = validate_first_name(firstName);
+    if(firstName_validation !== ""){
+        document.getElementById("registerResult").innerHTML = firstName_validation;
+        return;
+    }
+    const lastName_validation = validate_last_name(lastName);
+
+    if(lastName_validation !== ""){
+        document.getElementById("registerResult").innerHTML = lastName_validation;
+        return;
+    }
+    const username_validation = validate_username(username);
+
+    if(username_validation !== ""){
+        document.getElementById("registerResult").innerHTML = username_validation;
+        return;
+    }
+    const password_validation = validate_password(password);
+
+    if(password_validation !== ""){
+        document.getElementById("registerResult").innerHTML = password_validation;
+        return;
+    }
+
     //var hash = md5(password);
 
     document.getElementById("registerResult").innerHTML = "";
@@ -91,23 +111,31 @@ function doRegister() {
 
     try {
         xhr.onreadystatechange = function () {
+            //ajax operation complete! code == 4
 			if(this.readyState != 4){
 				return;
 			}
             if (this.status == 200) {
                 
                 let jsonObject = JSON.parse(xhr.responseText);
-				document.getElementById("firstName").value = "";
-				document.getElementById("lastName").value = "";
-				document.getElementById("username").value = "";
-				document.getElementById("password").value = "";
-				document.getElementById("registerForm").style.display = "none";
-        		document.getElementById("loginForm").style.display = "block";
-                document.getElementById("registerResult").innerHTML = "User added";
+                errorCheck = jsonObject.firstName;
+
+                if(errorCheck === ""){
+                    document.getElementById("registerResult").innerHTML = jsonObject.error;
+                }
+                else{   
+                    document.getElementById("firstName").value = "";
+                    document.getElementById("lastName").value = "";
+                    document.getElementById("username").value = "";
+                    document.getElementById("password").value = "";
+                    document.getElementById("registerForm").style.display = "none";
+                    document.getElementById("loginForm").style.display = "block";
+                    document.getElementById("loginResult").innerHTML = "User added";
+                }
             }
 
             else{
-                document.getElementById("registerResult").innerHTML = "User already exists";
+                document.getElementById("registerResult").innerHTML = "Response from server failed. Try refreshing.";
                 return;
             }
         };
@@ -176,8 +204,36 @@ function addContact()
 	let contactTextLast = document.getElementById("contactTextLast").value;
 	let contactTextNumber = document.getElementById("contactTextNumber").value;
 	let contactTextEmail = document.getElementById("contactTextEmail").value;
-	document.getElementById("contactAddResult").innerHTML = "";
+	
+    //validate the first name
+    const firstName_validation = validate_first_name(contactTextFirst);
+    if(firstName_validation !== ""){
+        document.getElementById("contactAddResult").innerHTML = firstName_validation;
+        return;
+    }
 
+    //validate the last name
+    const lastName_validation = validate_last_name(contactTextLast);
+    if(lastName_validation !== ""){
+        document.getElementById("contactAddResult").innerHTML = lastName_validation;
+        return;
+    }
+
+    //validate phone number
+    const phone_validation = validate_phone(contactTextNumber);
+    if(phone_validation !== ""){
+        document.getElementById("contactAddResult").innerHTML = phone_validation;
+        return;
+    }
+
+    //validate email
+    const email_validation = validate_email(contactTextEmail);
+    if(email_validation !== ""){
+        document.getElementById("contactAddResult").innerHTML = email_validation;
+        return;
+    }
+    
+    document.getElementById("contactAddResult").innerHTML = "";
 	let tmp = {
 		FirstName:contactTextFirst,
 		LastName:contactTextLast,
@@ -185,6 +241,7 @@ function addContact()
 		Email:contactTextEmail,
 		UserId:userId
 	};
+    console.log(tmp);
 	let jsonPayload = JSON.stringify( tmp );
 
 	let url = urlBase + '/AddContact.' + extension;
@@ -197,14 +254,21 @@ function addContact()
 		xhr.onreadystatechange = function() 
 		{
 			if (this.readyState == 4 && this.status == 200) 
-			{
-				document.getElementById("contactAddResult").innerHTML = "Contact has been added";
-				document.getElementById("contactTextFirst").value = "";
-				document.getElementById("contactTextLast").value = "";
-				document.getElementById("contactTextNumber").value = "";
-				document.getElementById("contactTextEmail").value = "";
-                document.getElementById("addContactToggle").style.display = "none";
-				loadContacts();
+			{   
+                let jsonObject = JSON.parse(xhr.responseText);
+                if(jsonObject.error == ""){
+
+                    document.getElementById("contactAddResult").innerHTML = "Contact has been added";
+                    document.getElementById("contactTextFirst").value = "";
+                    document.getElementById("contactTextLast").value = "";
+                    document.getElementById("contactTextNumber").value = "";
+                    document.getElementById("contactTextEmail").value = "";
+                    document.getElementById("addContactToggle").style.display = "none";
+                    loadContacts();
+                }
+                else{
+                    document.getElementById("contactAddResult").innerHTML = jsonObject.error;
+                }
 			}
 		};
 		xhr.send(jsonPayload);
@@ -332,8 +396,17 @@ function editContact(id){
 }
 
 function deleteContact(id) {
-    var namef_val = document.getElementById("first_Name" + id).innerText;
-    var namel_val = document.getElementById("last_Name" + id).innerText;
+    var namef_val;
+    var namel_val;
+    if(document.getElementById("edit_button" + id).style.display != "none"){
+        namef_val = document.getElementById("first_Name" + id).innerText;
+        namel_val = document.getElementById("last_Name" + id).innerText;
+    }
+    else{
+        namef_val = document.getElementById("namef_text" + id).value;
+        namel_val = document.getElementById("namel_text" + id).value;
+    }
+    
     nameOne = namef_val.substring(0, namef_val.length);
     nameTwo = namel_val.substring(0, namel_val.length);
     let check = confirm('Confirm deletion of contact: ' + nameOne + ' ' + nameTwo);
@@ -407,5 +480,92 @@ function searchContacts() {
         }
     }
 }
+
+function validate_first_name(firstName){
+    if (firstName == "") {
+        return "Entered Name is blank!";
+    }
+    else if(firstName.length < 2){
+        return "Your name is shorted than 2!";
+    }
+    else{
+        return "";
+    }
+}
+
+function validate_last_name(lastName){
+    if (lastName == "") {
+        return "Entered Last Name is blank!";
+    }
+    else if(lastName.length < 2){
+        return "Your Last Name is shorted than 2!";
+    }
+    else{
+        return "";
+    }
+}
+
+function validate_username(username){
+    if (username == "") {
+        return "Entered user-name is blank!";
+    }
+    else if(username.length < 2){
+        return "Your user-name is shorted than 2!";
+    }
+    else{
+        return "";
+    }
+}
+
+function validate_password(password){
+    if (password == "") {
+        return "Entered password is blank!";
+    }
+    else if(password.length < 6){
+        return "Your password must be longer than 5!";
+    }
+    else{
+        var regex = /\d/;
+        if (regex.test(password) == false) {
+            return "Entered password doesnt have a digit!"; 
+        }
+
+        var regex = /[a-z]/;
+        if (regex.test(password) == false) {
+            return "Entered password doesnt have characters!"; 
+        }
+        return "";
+    }
+}
+
+function validate_phone(phone){
+    if (phone == "") {
+        return "Entered phone is blank!";
+    }
+    else{
+        var regex = /^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$/;
+
+        if (regex.test(phone) == false) {
+            return "Phone form: 000-000-0000";
+        }
+        console.log(phone)
+        return "";
+    }
+}
+
+function validate_email(email){
+    if (email == "") {
+        return "Entered email is blank!";
+    }
+    else{
+        var regex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]+)$/;
+
+        if (regex.test(email) == false) {
+            return "Email form: _@_._ Ex: a@b.c";
+        }
+        return "";
+    }
+}
+
 
 
