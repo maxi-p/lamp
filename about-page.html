@@ -4,7 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-
+    <script type="text/javascript" src="js/code.js"></script>
+    <script type="text/javascript">
+      document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+          readCookie();
+        },
+        false
+      );
+    </script>
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -21,6 +30,42 @@
     />
   </head>
   <body>
+    <nav
+    class="navbar navbar-expand-lg navbar-dark bg-dark"
+    id="navbar"
+    style="position: fixed; width: 100%; z-index: 1000"
+  >
+    <div class="container-fluid" id="bar-container">
+      <!-- Left corner - Image placeholder -->
+      <a class="navbar-brand" href="#" id="left-corner">
+        <img
+          src="images/logo-no-background.png"
+          height="30"
+          style="margin-right: 10px"
+        />ContactLinker
+      </a>
+
+      <!-- Middle - Create New Contact and About Us links -->
+      <div class="d-flex mx-auto" id="middle-corner">
+        <a href="home-page.html" class="nav-link" id="about-link" style="color: white"
+          >Home Page</a>
+      </div>
+
+      <!-- Right corner - Logout link -->
+      <div class="ms-auto" id="right-corner">
+        <button
+          type="button"
+          id="logoutButton"
+          class="nav-link btn btn-dark btn-rounded"
+          data-mdb-ripple-init
+          onclick="doLogout();"
+          style="color: #ff4057"
+        >
+          Log Out
+        </button>
+      </div>
+    </div>
+  </nav>
     <div class="d-flex justify-content-center align-items-cente">
       <h1
         style="
@@ -28,19 +73,19 @@
           font-family: Alegreya;
           font-size: 75px;
           font-style: italic;
-        "
-      >
+          margin-top: 50px;
+        " >
         Team 7
       </h1>
     </div>
 
     <div
       class="d-flex flex-wrap justify-content-center shadow-xl"
-      style="position: absolute; margin-top: 80px"
+      style="position: absolute; margin-top: 130px"
     >
       <div class="card m-4 shadow" style="width: 250px; height: 250px">
         <img
-          src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp"
+          src="images/noah.jpg"
           class="card-img-top"
           alt="Fissure in Sandstone"
         />
@@ -52,7 +97,7 @@
 
       <div class="card m-4 shadow" style="width: 250px; height: 250px">
         <img
-          src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp"
+          src="images/ethan.jpg"
           class="card-img-top"
           alt="Fissure in Sandstone"
         />
@@ -64,7 +109,7 @@
 
       <div class="card m-4 shadow" style="width: 250px; height: 250px">
         <img
-          src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp"
+          src="images/jeovan.jpg"
           class="card-img-top"
           alt="Fissure in Sandstone"
         />
@@ -76,7 +121,7 @@
 
       <div class="card m-4 shadow" style="width: 250px; height: 250px">
         <img
-          src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp"
+          src="images/max.jpg"
           class="card-img-top"
           alt="Fissure in Sandstone"
         />
@@ -88,7 +133,7 @@
 
       <div class="card m-4 shadow" style="width: 250px; height: 250px">
         <img
-          src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp"
+          src="images/bryan.jpg"
           class="card-img-top"
           alt="Fissure in Sandstone"
         />
