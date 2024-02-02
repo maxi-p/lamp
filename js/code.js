@@ -1,12 +1,9 @@
-const urlBase = 'http://165.227.103.4/LAMPAPI';
+const urlBase = 'http://contact-linker.xyz/LAMPAPI';
 const extension = 'php';
 
-//hardcoded!!!
-//TODO: change to 0, "", "", and remove saveCookie()....
-let userId = 7;
-let firstName = "asd";
-let lastName = "asd";
-saveCookie();
+let userId = 0;
+let firstName = "";
+let lastName = "";
 
 function doLogin()
 {
