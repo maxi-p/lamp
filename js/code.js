@@ -65,28 +65,28 @@ function doRegister() {
 
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
+    let errorArray = [];
 
     const firstName_validation = validate_first_name(firstName);
-    if(firstName_validation !== ""){
-        document.getElementById("registerResult").innerHTML = firstName_validation;
-        return;
-    }
+    errorArray.push(firstName_validation);
+
     const lastName_validation = validate_last_name(lastName);
+    errorArray.push(lastName_validation);
 
-    if(lastName_validation !== ""){
-        document.getElementById("registerResult").innerHTML = lastName_validation;
-        return;
-    }
     const username_validation = validate_username(username);
+    errorArray.push(username_validation);   
 
-    if(username_validation !== ""){
-        document.getElementById("registerResult").innerHTML = username_validation;
-        return;
-    }
     const password_validation = validate_password(password);
-
-    if(password_validation !== ""){
-        document.getElementById("registerResult").innerHTML = password_validation;
+    errorArray.push(password_validation);
+    
+    let errorHTML = "";
+    for(let i=0; i<errorArray.length; i++){
+        if(errorArray[i] !== ""){
+            errorHTML += "<li>"+errorArray[i]+"</li>";
+        }
+    }
+    if(errorHTML != ""){
+        document.getElementById("registerResult").innerHTML = errorHTML;
         return;
     }
 
