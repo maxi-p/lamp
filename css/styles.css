@@ -8,6 +8,52 @@
   text-align: center;
 }
 
+#errorContainer {
+  /* make sure to display it "block" */
+  display: none;
+  margin-bottom: 10px;
+}
+
+#asterick,
+#updateErrorMessage {
+  color: darkred;
+}
+
+#updateErrorMessage {
+  border: solid;
+  border-radius: 5px;
+  display: inline-block;
+  width: fit-content;
+  padding: 2px 3px 2px 3px;
+}
+
+#modal {
+  border-radius: 5px;
+  border: none;
+}
+
+#deleteMessage {
+  padding: 10px;
+}
+
+#modalButtonsContainer {
+  display: flex;
+  justify-content: right;
+}
+
+#modalYesButton {
+  margin-left: 10px;
+}
+
+#welcomeText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 200px;
+  z-index: 1000;
+}
+
 .divider:after,
 .divider:before {
   content: "";

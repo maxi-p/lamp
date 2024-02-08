@@ -13,6 +13,12 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+
+    <style>
+      dialog::backdrop {
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+    </style>
   </head>
   <body>
     <section class="vh-100">
@@ -26,6 +32,37 @@
             />
           </div>
           <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+            <!-- Error printing -->
+            <div id="errorContainer">
+              <span id="asterick">*</span>
+              <span id="updateErrorMessage"> Hello </span>
+            </div>
+
+            <!-- Modal popup -->
+
+            <!-- <button data-open-modal>Open</button> -->
+
+            <dialog id="modal" data-modal>
+              <div id="deleteMessage">
+                Are you sure you want to delete
+                <a id="userName">User's</a> Contact
+              </div>
+              <div id="modalButtonsContainer">
+                <button
+                  id="modalCancelButton"
+                  class="btn btn-outline-secondary cancel-btn"
+                >
+                  Cancel
+                </button>
+                <button
+                  id="modalYesButton"
+                  class="btn btn-outline-danger yes-btn"
+                >
+                  Yes
+                </button>
+              </div>
+            </dialog>
+
             <form id="loginForm">
               <!-- Email input -->
               <div class="form-outline mb-4">
@@ -60,7 +97,6 @@
                   Sign in
                 </button>
               </div>
-             
 
               <!-- Divider -->
               <div class="d-flex justify-content-center align-items-center">
@@ -84,7 +120,7 @@
             </form>
 
             <!-- Register form -->
-            <form id="registerForm" style="display: none">
+            <form id="registerForm" style="display: none; margin-top: 10px">
               <!-- Registration form fields -->
 
               <!-- First Name input -->
@@ -171,6 +207,25 @@
         document.getElementById("registerForm").style.display = "none";
         document.getElementById("loginForm").style.display = "block";
       }
+
+      // JS for modal popup
+
+      const deleteButton = document.querySelector("[data-open-modal]");
+      const modal = document.querySelector("[data-modal]");
+      const cancelButton = document.querySelector(".cancel-btn");
+      const yesButton = document.querySelector(".yes-btn");
+
+      deleteButton.addEventListener("click", () => {
+        modal.showModal();
+      });
+
+      cancelButton.addEventListener("click", () => {
+        modal.close();
+      });
+
+      yesButton.addEventListener("click", () => {
+        modal.close();
+      });
     </script>
   </body>
 </html>
