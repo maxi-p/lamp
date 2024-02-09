@@ -436,7 +436,7 @@ function deleteContact(id) {
     const modal = document.querySelector("[data-modal]");
     const cancelButton = document.querySelector(".cancel-btn");
     const yesButton = document.querySelector(".yes-btn");
-    modal.getElementById('confirmUserName').innerHTML = nameOne + ' ' + nameTwo;
+    document.getElementById('confirmUserName').innerHTML = nameOne + ' ' + nameTwo;
     modal.showModal();
     cancelButton.addEventListener("click", () => {
         modal.close();
