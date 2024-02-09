@@ -13,6 +13,12 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+
+    <style>
+      dialog::backdrop {
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+    </style>
   </head>
   <body>
     <section class="vh-100">
@@ -26,25 +32,34 @@
             />
           </div>
           <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+
+            <!-- Error printing -->
+            <div id="errorContainer">
+              <span id="asterick" class="text-success">*</span>
+              <span id="updateErrorMessage" class="text-success"></span>
+            </div>
+
             <form id="loginForm">
               <!-- Email input -->
-              <div class="form-outline mb-4">
+              <div id="login0" class="form-outline mb-4">
                 <input
                   type="email"
                   id="loginName"
                   class="form-control form-control-lg"
                 />
                 <label class="form-label" for="form1Example13">Login</label>
+                <small class="text-danger"></small>
               </div>
 
               <!-- Password input -->
-              <div class="form-outline mb-4">
+              <div id="login1" class="form-outline mb-4">
                 <input
                   type="password"
                   id="loginPassword"
                   class="form-control form-control-lg"
                 />
                 <label class="form-label" for="form1Example23">Password</label>
+                <small class="text-danger"></small>
               </div>
               <span class="text" id="loginResult"></span>
               <!-- Submit button -->
@@ -60,7 +75,6 @@
                   Sign in
                 </button>
               </div>
-             
 
               <!-- Divider -->
               <div class="d-flex justify-content-center align-items-center">
@@ -84,47 +98,51 @@
             </form>
 
             <!-- Register form -->
-            <form id="registerForm" style="display: none">
+            <form id="registerForm" style="display: none; margin-top: 10px">
               <!-- Registration form fields -->
 
               <!-- First Name input -->
-              <div class="form-outline mb-4">
+              <div id="register0" class="form-outline mb-4">
                 <input
                   type="text"
                   id="firstName"
                   class="form-control form-control-lg"
                 />
                 <label class="form-label" for="firstName">First Name</label>
+                <small class="text-danger"></small> 
               </div>
 
               <!-- Last Name input -->
-              <div class="form-outline mb-4">
+              <div id="register1"  class="form-outline mb-4">
                 <input
                   type="text"
                   id="lastName"
                   class="form-control form-control-lg"
                 />
                 <label class="form-label" for="lastName">Last Name</label>
+                <small class="text-danger"></small> 
               </div>
 
               <!-- Email input -->
-              <div class="form-outline mb-4">
+              <div id="register2"  class="form-outline mb-4">
                 <input
                   type="text"
                   id="username"
                   class="form-control form-control-lg"
                 />
                 <label class="form-label" for="username">Username</label>
+                <small class="text-danger"></small> 
               </div>
 
               <!-- Password input -->
-              <div class="form-outline mb-4">
+              <div id="register3"  class="form-outline mb-4">
                 <input
                   type="password"
                   id="password"
                   class="form-control form-control-lg"
                 />
                 <label class="form-label" for="password">Password</label>
+                <small class="text-danger"></small> 
               </div>
 
               <!-- Submit button -->
@@ -148,7 +166,7 @@
               >
                 Back to Login
               </button>
-              <span class="text" id="registerResult"></span>
+              <span class="text-danger" id="registerResult"></span>
             </form>
           </div>
         </div>
