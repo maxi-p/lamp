@@ -37,10 +37,17 @@ function doLogin()
 		
 				if( userId < 1 )
 				{		
-					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
+					document.getElementById("login0").getElementsByTagName("input")[0].classList.add('is-invalid');
+                    document.getElementById("login0").getElementsByTagName("small")[0].innerHTML = "* " + "User/Password combination incorrect";
+					document.getElementById("login1").getElementsByTagName("input")[0].classList.add('is-invalid');
+                    document.getElementById("login1").getElementsByTagName("small")[0].innerHTML = "* " + "User/Password combination incorrect";
 					return;
 				}
-		
+                
+                document.getElementById("login0").getElementsByTagName("input")[0].classList.remove('is-invalid');
+                document.getElementById("login0").getElementsByTagName("small")[0].innerHTML = "";
+                document.getElementById("login1").getElementsByTagName("input")[0].classList.remove('is-invalid');
+                document.getElementById("login1").getElementsByTagName("small")[0].innerHTML = "";
 				firstName = jsonObject.FirstName;
 				lastName = jsonObject.LastName;
 
@@ -74,7 +81,7 @@ function doRegister() {
     errorArray.push(lastName_validation);
 
     const username_validation = validate_username(username);
-    errorArray.push(username_validation);   
+    errorArray.push(username_validation);
 
     const password_validation = validate_password(password);
     errorArray.push(password_validation);
@@ -82,11 +89,17 @@ function doRegister() {
     let errorHTML = "";
     for(let i=0; i<errorArray.length; i++){
         if(errorArray[i] !== ""){
-            errorHTML += "<li>"+errorArray[i]+"</li>";
+            document.getElementById("register"+i).getElementsByTagName("input")[0].classList.add('is-invalid');
+            document.getElementById("register"+i).getElementsByTagName("small")[0].innerHTML = "* " + errorArray[i];
+            errorHTML += i;
+        }
+        else{
+            document.getElementById("register"+i).getElementsByTagName("input")[0].classList.remove('is-invalid');
+            document.getElementById("register"+i).getElementsByTagName("small")[0].innerHTML = "";
         }
     }
-    if(errorHTML != ""){
-        document.getElementById("registerResult").innerHTML = errorHTML;
+
+    if(errorHTML !== ""){
         return;
     }
 
@@ -121,16 +134,20 @@ function doRegister() {
                 errorCheck = jsonObject.firstName;
 
                 if(errorCheck === ""){
-                    document.getElementById("registerResult").innerHTML = jsonObject.error;
+                    document.getElementById("register2").getElementsByTagName("input")[0].classList.add('is-invalid');
+                    document.getElementById("register2").getElementsByTagName("small")[0].innerHTML = "* " + jsonObject.error;
                 }
                 else{   
+                    document.getElementById("register2").getElementsByTagName("input")[0].classList.remove('is-invalid');
+                    document.getElementById("register2").getElementsByTagName("small")[0].innerHTML = "";
                     document.getElementById("firstName").value = "";
                     document.getElementById("lastName").value = "";
                     document.getElementById("username").value = "";
                     document.getElementById("password").value = "";
                     document.getElementById("registerForm").style.display = "none";
                     document.getElementById("loginForm").style.display = "block";
-                    document.getElementById("loginResult").innerHTML = "User added";
+                    document.getElementById("errorContainer").style.display="block";
+                    document.getElementById("updateErrorMessage").innerHTML = "User added";
                 }
             }
 
@@ -200,36 +217,43 @@ function doLogout()
 
 function addContact()
 {
+
 	let contactTextFirst = document.getElementById("contactTextFirst").value;
 	let contactTextLast = document.getElementById("contactTextLast").value;
 	let contactTextNumber = document.getElementById("contactTextNumber").value;
 	let contactTextEmail = document.getElementById("contactTextEmail").value;
 	
+    let errorArray = [];
+
     //validate the first name
     const firstName_validation = validate_first_name(contactTextFirst);
-    if(firstName_validation !== ""){
-        document.getElementById("contactAddResult").innerHTML = firstName_validation;
-        return;
-    }
+    errorArray.push(firstName_validation);
 
     //validate the last name
     const lastName_validation = validate_last_name(contactTextLast);
-    if(lastName_validation !== ""){
-        document.getElementById("contactAddResult").innerHTML = lastName_validation;
-        return;
-    }
+    errorArray.push(lastName_validation);
 
     //validate phone number
     const phone_validation = validate_phone(contactTextNumber);
-    if(phone_validation !== ""){
-        document.getElementById("contactAddResult").innerHTML = phone_validation;
-        return;
-    }
+    errorArray.push(phone_validation);
 
     //validate email
     const email_validation = validate_email(contactTextEmail);
-    if(email_validation !== ""){
-        document.getElementById("contactAddResult").innerHTML = email_validation;
+    errorArray.push(email_validation);
+    
+    let errorHTML = "";
+    for(let i=0; i<errorArray.length; i++){
+        if(errorArray[i] !== ""){
+            document.getElementById("addContact"+i).getElementsByTagName("input")[0].classList.add('is-invalid');
+            document.getElementById("addContact"+i).getElementsByTagName("small")[0].innerHTML = "* " + errorArray[i];
+            errorHTML += i;
+        }
+        else{
+            document.getElementById("addContact"+i).getElementsByTagName("input")[0].classList.remove('is-invalid');
+            document.getElementById("addContact"+i).getElementsByTagName("small")[0].innerHTML = "";
+        }
+    }
+    if(errorHTML !== ""){
         return;
     }
     
@@ -409,8 +433,21 @@ function deleteContact(id) {
     
     nameOne = namef_val.substring(0, namef_val.length);
     nameTwo = namel_val.substring(0, namel_val.length);
-    let check = confirm('Confirm deletion of contact: ' + nameOne + ' ' + nameTwo);
-    if (check === true) {
+    const modal = document.querySelector("[data-modal]");
+    const cancelButton = document.querySelector(".cancel-btn");
+    const yesButton = document.querySelector(".yes-btn");
+    modal.getElementById('confirmUserName').innerHTML = nameOne + ' ' + nameTwo;
+    modal.showModal();
+    cancelButton.addEventListener("click", () => {
+        modal.close();
+    });
+
+    yesButton.addEventListener("click", () => {
+        deleteUtil();
+        modal.close();
+    });
+    // let check = confirm('Confirm deletion of contact: ' + nameOne + ' ' + nameTwo);
+    function deleteUtil(){
         document.getElementById("row" + id + "").outerHTML = "";
         let tmp = {
             FirstName: nameOne,
@@ -567,5 +604,13 @@ function validate_email(email){
     }
 }
 
+function get_class(str){
+    if(str === ""){
+        return "";
+    }
+    else{
+        return " updateErrorMessage";
+    }
+}
 
 

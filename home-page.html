@@ -49,9 +49,9 @@
           >
             Create New Contact
           </button>
-          <button type="button" class="btn btn-dark" data-mdb-ripple-init>
+          <a href="about-page.html" class="btn btn-dark" data-mdb-ripple-init>
             About Us
-          </button>
+          </a>
         </div>
 
         <!-- Search form -->
@@ -96,33 +96,77 @@
     </nav>
     <span id="userName"></span><br />
     <!-- <br /><br /><br /> -->
+
+    <!-- Modal Dialog (are you sure?) -->
+    <dialog id="modal" data-modal>
+      <div id="deleteMessage">
+        Confirm deletion of contact: 
+        <a id="confirmUserName"></a>
+      </div>
+      <div id="modalButtonsContainer">
+        <button
+          id="modalCancelButton"
+          class="btn btn-outline-secondary cancel-btn"
+        >
+          Cancel
+        </button>
+        <button
+          id="modalYesButton"
+          class="btn btn-outline-danger yes-btn"
+        >
+          Yes
+        </button>
+      </div>
+    </dialog>
+
+
     <div class="addContacts" id="addContactToggle">
-      <input
+      <div class="addFN"
+      id="addContact0">
+      <small class="text-danger"></small>
+        <input
         type="text"
         id="contactTextFirst"
         placeholder="First Name"
-        required
-      />
+        class="form-control"
+        />
+        
+      </div>
+      <div class="addLN"
+      id="addContact1">
+      <small class="text-danger"></small>
       <input
         type="text"
         id="contactTextLast"
         placeholder="Last Name"
-        required
+        class="form-control"
       />
+      
+    </div>
+    <div class="addPH"
+    id="addContact2">
+      <small class="text-danger"></small>
       <input
         type="text"
         id="contactTextNumber"
         placeholder="XXX-XXX-XXXX"
-        required
+        class="form-control"
         pattern="^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$"
       />
+      
+    </div>
+    <div class="addEM"
+    id="addContact3">
+      <small class="text-danger"></small>
       <input
         type="text"
         id="contactTextEmail"
         placeholder="name@email.com"
+        class="form-control"
         pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
-        required
       />
+      
+    </div>
       <button
         type="button"
         id="addContactButton"
@@ -142,11 +186,6 @@
       </button>
       <span id="contactAddResult"></span>
     </div>
-
-    <h3 id="welcomeText">
-      Welcome,
-      <h3 id="userName">User</h3>
-    </h3>
 
     <table
       class="table text-center"

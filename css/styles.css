@@ -14,17 +14,14 @@
   margin-bottom: 10px;
 }
 
-#asterick,
-#updateErrorMessage {
+
+.updateErrorMessage {
   color: darkred;
 }
 
-#updateErrorMessage {
-  border: solid;
+.updateErrorMessage {
+  border: 2px solid darkred;
   border-radius: 5px;
-  display: inline-block;
-  width: fit-content;
-  padding: 2px 3px 2px 3px;
 }
 
 #modal {
@@ -74,7 +71,7 @@
   justify-content: center;
   position: fixed;
   width: 300px;
-  height: 380px;
+  overflow: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
