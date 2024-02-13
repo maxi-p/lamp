@@ -234,7 +234,7 @@ function readCookie()
 	else
 	{
 		console.log("ASD");
-		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+		// document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
 	}
 }
 
@@ -245,6 +245,47 @@ function doLogout()
 	lastName = "";
 	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
 	window.location.href = "index.html";
+}
+
+function validate_add_contact(){
+    let contactTextFirst = document.getElementById("contactTextFirst").value;
+	let contactTextLast = document.getElementById("contactTextLast").value;
+	let contactTextNumber = document.getElementById("contactTextNumber").value;
+	let contactTextEmail = document.getElementById("contactTextEmail").value;
+	
+    let errorArray = [];
+
+    //validate the first name
+    const firstName_validation = validate_first_name(contactTextFirst);
+    errorArray.push(firstName_validation);
+
+    //validate the last name
+    const lastName_validation = validate_last_name(contactTextLast);
+    errorArray.push(lastName_validation);
+
+    //validate phone number
+    const phone_validation = validate_phone(contactTextNumber);
+    errorArray.push(phone_validation);
+
+    //validate email
+    const email_validation = validate_email(contactTextEmail);
+    errorArray.push(email_validation);
+    
+    let errorHTML = "";
+    for(let i=0; i<errorArray.length; i++){
+        if(errorArray[i] !== ""){
+            document.getElementById("addContact"+i).getElementsByTagName("input")[0].classList.add('is-invalid');
+            document.getElementById("addContact"+i).getElementsByTagName("small")[0].innerHTML = "* " + errorArray[i];
+            errorHTML += i;
+        }
+        else{
+            document.getElementById("addContact"+i).getElementsByTagName("input")[0].classList.remove('is-invalid');
+            document.getElementById("addContact"+i).getElementsByTagName("small")[0].innerHTML = "";
+        }
+    }
+    if(errorHTML !== ""){
+        return;
+    }
 }
 
 function addContact()
@@ -512,6 +553,7 @@ function deleteContact(id) {
 }
 
 function createContact(){
+    validate_add_contact();
     document.getElementById("addContactToggle").style.display = "block";
 }
 
@@ -644,5 +686,6 @@ function get_class(str){
         return " updateErrorMessage";
     }
 }
+
 
 

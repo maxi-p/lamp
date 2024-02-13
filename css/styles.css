@@ -8,6 +8,15 @@
   text-align: center;
 }
 
+.trueBG{
+  background-image: url('../images/bg.jpeg'); 
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center, center;
+}
+
 #errorContainer {
   /* make sure to display it "block" */
   display: none;
@@ -168,3 +177,4 @@
 .rotate {
   animation: logoAnimation 4s ease-in-out;
 }
+
