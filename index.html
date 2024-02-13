@@ -104,6 +104,7 @@
               <!-- First Name input -->
               <div id="register0" class="form-outline mb-4">
                 <input
+                  onkeyup="validate_register();"
                   type="text"
                   id="firstName"
                   class="form-control form-control-lg"
@@ -115,6 +116,7 @@
               <!-- Last Name input -->
               <div id="register1"  class="form-outline mb-4">
                 <input
+                  onkeyup="validate_register();"
                   type="text"
                   id="lastName"
                   class="form-control form-control-lg"
@@ -126,6 +128,7 @@
               <!-- Email input -->
               <div id="register2"  class="form-outline mb-4">
                 <input
+                  onkeyup="validate_register();"
                   type="text"
                   id="username"
                   class="form-control form-control-lg"
@@ -137,6 +140,7 @@
               <!-- Password input -->
               <div id="register3"  class="form-outline mb-4">
                 <input
+                  onkeyup="validate_register();"
                   type="password"
                   id="password"
                   class="form-control form-control-lg"
@@ -181,6 +185,7 @@
 
     <script>
       function showRegisterForm() {
+        validate_register();
         document.getElementById("loginForm").style.display = "none";
         document.getElementById("registerForm").style.display = "block";
       }

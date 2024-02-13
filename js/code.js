@@ -5,6 +5,7 @@ let userId = 0;
 let firstName = "";
 let lastName = "";
 
+
 function doLogin()
 {
 	userId = 0;
@@ -65,6 +66,37 @@ function doLogin()
 
 }
 
+function validate_register(){
+    firstName = document.getElementById("firstName").value;
+    lastName = document.getElementById("lastName").value;
+
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+    let errorArray = [];
+
+    const firstName_validation = validate_first_name(firstName);
+    errorArray.push(firstName_validation);
+
+    const lastName_validation = validate_last_name(lastName);
+    errorArray.push(lastName_validation);
+
+    const username_validation = validate_username(username);
+    errorArray.push(username_validation);
+
+    const password_validation = validate_password(password);
+    errorArray.push(password_validation);
+    
+    for(let i=0; i<errorArray.length; i++){
+        if(errorArray[i] !== ""){
+            document.getElementById("register"+i).getElementsByTagName("input")[0].classList.add('is-invalid');
+            document.getElementById("register"+i).getElementsByTagName("small")[0].innerHTML = "* " + errorArray[i];
+        }
+        else{
+            document.getElementById("register"+i).getElementsByTagName("input")[0].classList.remove('is-invalid');
+            document.getElementById("register"+i).getElementsByTagName("small")[0].innerHTML = "";
+        }
+    }   
+}
 
 function doRegister() {
     firstName = document.getElementById("firstName").value;
